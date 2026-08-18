@@ -23,7 +23,7 @@ export default function LoginPage() {
     if (result?.error) {
       setError("Credenciais inválidas");
     } else {
-      router.push("/admin");
+      router.push("/tititica-painel");
       router.refresh();
     }
   };
