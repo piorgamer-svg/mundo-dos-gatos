@@ -12,3 +12,11 @@ Este documento e o respectivo histórico de commits (rastreio criptográfico do 
 
 AVISO LEGAL:
 Embora este documento comprove a autoria (Direitos Autorais) do código e da arte nesta data, ele não substitui o registro formal de Marca junto aos órgãos governamentais competentes (como o INPI no Brasil) para a obtenção do uso exclusivo da marca comercial.
+
+3. PROVA DE EXISTÊNCIA E TITULARIDADE (PROOF OF EXISTENCE)
+O criador desta obra (titular dos direitos do nome "Lojinha da Tititica", mascote e código) gerou um documento físico/digital secreto contendo seus dados civis (Nome, CPF, RG). Para preservar sua privacidade enquanto garante a segurança jurídica, apenas a impressão digital criptográfica (Hash SHA-256) desse documento original está publicada aqui.
+
+Hash SHA-256 do Documento Original de Autoria:
+3CBE26A88127CBC4DB7E0D4C0D9F3385D08C79102C037FFD7EC63930F03A7E4D
+
+Em caso de litígio ou necessidade de prova de autoria, o autor original apresentará o documento de texto contendo seus dados. Qualquer autoridade judiciária ou perito poderá rodar o algoritmo SHA-256 sobre aquele documento; a exatidão matemática resultará no hash acima, provando incontestavelmente que o documento já existia na posse do autor na data de submissão (18/08/2026).
