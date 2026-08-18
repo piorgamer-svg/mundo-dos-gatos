@@ -1,0 +1,14 @@
+DECLARAÇÃO DE DIREITOS AUTORAIS E ANTERIORIDADE
+
+Data de criação/registro no repositório: 18 de Agosto de 2026
+
+Fica declarado, através do registro de data e hora (timestamp) inalterável fornecido pelo sistema de controle de versão Git e pela plataforma GitHub, que os arquivos, código-fonte, design, interface (UI/UX) e a identidade visual (incluindo o logotipo e o mascote) contidos neste repositório sob o nome "Lojinha da Tititica" são de autoria e propriedade intelectual original do titular da conta 	ititica011-code.
+
+1. DIREITOS AUTORAIS (COPYRIGHT)
+Todo o código, textos, imagens e design aqui contidos estão protegidos pelas leis de Direitos Autorais aplicáveis. É proibida a cópia, reprodução, distribuição ou uso comercial não autorizado destes materiais sem o consentimento expresso do autor original.
+
+2. ANTERIORIDADE
+Este documento e o respectivo histórico de commits (rastreio criptográfico do Git - SHA-1) servem como prova material de anterioridade de criação da identidade visual, do mascote e do código estrutural da "Lojinha da Tititica" na data acima mencionada.
+
+AVISO LEGAL:
+Embora este documento comprove a autoria (Direitos Autorais) do código e da arte nesta data, ele não substitui o registro formal de Marca junto aos órgãos governamentais competentes (como o INPI no Brasil) para a obtenção do uso exclusivo da marca comercial.
