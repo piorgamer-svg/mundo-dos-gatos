@@ -1,4 +1,4 @@
-﻿import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -16,7 +16,7 @@ export async function GET(request: Request) {
 
   // Se nao tem codigo, redireciona para autorizar
   if (!code) {
-    const authUrl = https://auth.mercadolivre.com.br/authorization?response_type=code&client_id=&redirect_uri=;
+    const authUrl = `https://auth.mercadolivre.com.br/authorization?response_type=code&client_id=${appId}&redirect_uri=${redirectUri}`;
     return NextResponse.redirect(authUrl);
   }
 
