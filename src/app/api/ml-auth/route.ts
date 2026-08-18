@@ -58,6 +58,16 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ success: true, message: 'App conectado com sucesso! O token foi salvo no banco de dados. Você já pode fechar esta aba e usar o painel da Tititica.' });
   } else {
-    return NextResponse.json({ error: 'Falha ao obter token', details: data });
+    return NextResponse.json({ 
+      error: 'Falha ao obter token', 
+      details: data,
+      debug: {
+        appId_length: appId.length,
+        appId_start: appId.substring(0, 3),
+        secret_length: clientSecret.length,
+        secret_start: clientSecret.substring(0, 3),
+        secret_end: clientSecret.substring(clientSecret.length - 3)
+      }
+    });
   }
 }
