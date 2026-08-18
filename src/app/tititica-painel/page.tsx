@@ -34,32 +34,24 @@ export default async function AdminPage() {
     // Tenta extrair apenas se o usuário não preencheu os dados manualmente
     if (!title || !imageUrl || !price) {
       try {
-        const response = await fetch(originalUrl, {
-          headers: {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
-            "Accept-Language": "pt-BR,pt;q=0.9",
+        const match = originalUrl.match(/MLB-?(\d+)/i);
+        if (match) {
+          const mlbId = 'MLB' + match[1];
+          const response = await fetch(`https://api.mercadolibre.com/items/` + mlbId);
+          if (response.ok) {
+            const data = await response.json();
+            
+            if (!title) title = data.title;
+            if (!imageUrl && data.pictures && data.pictures.length > 0) {
+              imageUrl = data.pictures[0].secure_url || data.pictures[0].url;
+            }
+            if (!price && data.price) {
+              price = `R$ ` + data.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+            }
           }
-        });
-        const html = await response.text();
-        const $ = cheerio.load(html);
-
-        if (!title) {
-          title = $('meta[property="og:title"]').attr("content") || $("title").text() || "Produto sem título";
-          title = title.replace(" - Mercado Livre", "").trim();
-          if (title === "Mercado Libre" || title === "Mercado Livre") title = "Produto sem título (Edite manualmente)";
-        }
-        
-        if (!imageUrl) {
-          imageUrl = $('meta[property="og:image"]').attr("content") || "";
-          if (imageUrl.includes("logo__small")) imageUrl = ""; // Ignore ML generic logo
-        }
-        
-        if (!price) {
-          let priceText = $('.ui-pdp-price__second-line .andes-money-amount__fraction').first().text();
-          price = priceText ? `R$ ${priceText}` : "Preço sob consulta";
         }
       } catch (error) {
-        console.error("Erro ao fazer scrape:", error);
+        console.error("Erro ao puxar da API do ML:", error);
       }
     }
 
