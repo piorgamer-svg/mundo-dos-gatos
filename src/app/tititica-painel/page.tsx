@@ -45,16 +45,22 @@ export default async function AdminPage() {
         }
 
         if (mlbId) {
+          console.log("MLB ID Extraído:", mlbId);
           const token = await getMLToken();
+          console.log("Token do ML recuperado:", token ? "SIM" : "NAO");
           
           const headers: any = {};
           if (token) {
             headers['Authorization'] = `Bearer ${token}`;
           }
 
+          console.log("Fazendo fetch para:", `https://api.mercadolibre.com/items/` + mlbId);
           const response = await fetch(`https://api.mercadolibre.com/items/` + mlbId, { headers });
+          console.log("Status da resposta:", response.status);
+          
           if (response.ok) {
             const data = await response.json();
+            console.log("Dados recebidos do ML com sucesso");
             
             if (!title) title = data.title;
             if (!imageUrl && data.pictures && data.pictures.length > 0) {
@@ -63,7 +69,12 @@ export default async function AdminPage() {
             if (!price && data.price) {
               price = `R$ ` + data.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
             }
+          } else {
+            const errorText = await response.text();
+            console.log("Erro na resposta do ML:", errorText);
           }
+        } else {
+          console.log("Nenhum MLB ID extraido da URL:", originalUrl);
         }
       } catch (error) {
         console.error("Erro ao puxar da API do ML:", error);
