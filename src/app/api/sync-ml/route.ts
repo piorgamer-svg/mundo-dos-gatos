@@ -1,4 +1,4 @@
-﻿import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -27,7 +27,7 @@ export async function GET(request: Request) {
     const mlbId = 'MLB' + match[1];
 
     try {
-      const response = await fetch(https://api.mercadolibre.com/items/ + mlbId);
+      const response = await fetch("https://api.mercadolibre.com/items/" + mlbId);
       if (!response.ok) {
         // If 404, product might be completely gone
         if (response.status === 404) {
@@ -45,7 +45,7 @@ export async function GET(request: Request) {
         deletedCount++;
       } else {
         // Update price
-        const newPrice = R$  + data.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        const newPrice = "R$ " + data.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
         if (newPrice !== product.price) {
           await prisma.product.update({
             where: { id: product.id },
