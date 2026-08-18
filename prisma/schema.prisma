@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id           String   @id @default(cuid())
+  originalUrl  String   // O link original do Mercado Livre/etc
+  affiliateUrl String   // O seu link de afiliado
+  title        String
+  price        String   // Salvar como string pra simplificar com moedas diferentes
+  imageUrl     String
+  source       String   // ex: "Mercado Livre"
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
