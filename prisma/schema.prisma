@@ -23,12 +23,20 @@ model User {
 
 model Product {
   id           String   @id @default(cuid())
-  originalUrl  String   // O link original do Mercado Livre/etc
-  affiliateUrl String   // O seu link de afiliado
+  originalUrl  String // O link original do Mercado Livre/etc
+  affiliateUrl String // O seu link de afiliado
   title        String
-  price        String   // Salvar como string pra simplificar com moedas diferentes
+  price        String // Salvar como string pra simplificar com moedas diferentes
   imageUrl     String
-  source       String   // ex: "Mercado Livre"
+  source       String // ex: "Mercado Livre"
   createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model MLToken {
+  id           String   @id @default("1")
+  accessToken  String
+  refreshToken String
+  expiresAt    DateTime
   updatedAt    DateTime @updatedAt
 }

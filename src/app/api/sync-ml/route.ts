@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+import { getMLToken } from '@/lib/ml';
 
 const prisma = new PrismaClient();
 
@@ -27,7 +28,13 @@ export async function GET(request: Request) {
     const mlbId = 'MLB' + match[1];
 
     try {
-      const response = await fetch("https://api.mercadolibre.com/items/" + mlbId);
+      const token = await getMLToken();
+      const headers: any = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const response = await fetch("https://api.mercadolibre.com/items/" + mlbId, { headers });
       if (!response.ok) {
         // If 404, product might be completely gone
         if (response.status === 404) {

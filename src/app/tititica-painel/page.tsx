@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import * as cheerio from "cheerio";
+import { getMLToken } from "@/lib/ml";
 
 const prisma = new PrismaClient();
 
@@ -37,7 +38,14 @@ export default async function AdminPage() {
         const match = originalUrl.match(/MLB-?(\d+)/i);
         if (match) {
           const mlbId = 'MLB' + match[1];
-          const response = await fetch(`https://api.mercadolibre.com/items/` + mlbId);
+          const token = await getMLToken();
+          
+          const headers: any = {};
+          if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+          }
+
+          const response = await fetch(`https://api.mercadolibre.com/items/` + mlbId, { headers });
           if (response.ok) {
             const data = await response.json();
             
