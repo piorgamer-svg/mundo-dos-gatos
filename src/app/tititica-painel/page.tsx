@@ -35,9 +35,16 @@ export default async function AdminPage() {
     // Tenta extrair apenas se o usuário não preencheu os dados manualmente
     if (!title || !imageUrl || !price) {
       try {
-        const match = originalUrl.match(/MLB-?(\d+)/i);
-        if (match) {
-          const mlbId = 'MLB' + match[1];
+        let mlbId = null;
+        const urlParamsMatch = originalUrl.match(/(?:wid=|item_id(?:%3A|:))(MLB\d+)/i);
+        if (urlParamsMatch) {
+          mlbId = urlParamsMatch[1].toUpperCase();
+        } else {
+          const match = originalUrl.match(/MLB-?(\d+)/i);
+          if (match) mlbId = 'MLB' + match[1];
+        }
+
+        if (mlbId) {
           const token = await getMLToken();
           
           const headers: any = {};

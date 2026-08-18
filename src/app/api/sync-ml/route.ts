@@ -21,11 +21,16 @@ export async function GET(request: Request) {
   for (const product of products) {
     if (product.source !== 'Mercado Livre') continue;
 
-    // Extract MLB ID from originalUrl
-    const match = product.originalUrl.match(/MLB-?(\d+)/i);
-    if (!match) continue;
+    let mlbId = null;
+    const urlParamsMatch = product.originalUrl.match(/(?:wid=|item_id(?:%3A|:))(MLB\d+)/i);
+    if (urlParamsMatch) {
+      mlbId = urlParamsMatch[1].toUpperCase();
+    } else {
+      const match = product.originalUrl.match(/MLB-?(\d+)/i);
+      if (match) mlbId = 'MLB' + match[1];
+    }
     
-    const mlbId = 'MLB' + match[1];
+    if (!mlbId) continue;
 
     try {
       const token = await getMLToken();
