@@ -23,6 +23,14 @@ export default function ProductForm({ addProductAction, existingCategories = [] 
     }
   }, [searchParams]);
 
+  const handleClear = () => {
+    setOriginalUrl('');
+    setTitle('');
+    setPrice('');
+    setImageUrl('');
+    setCategory('');
+  };
+
   return (
     <form action={addProductAction} className="space-y-4">
       <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg mb-6">
@@ -86,9 +94,14 @@ export default function ProductForm({ addProductAction, existingCategories = [] 
         <label className="block font-semibold mb-1 text-pink-600">Seu Link de Afiliado *</label>
         <input type="url" name="affiliateUrl" required className="w-full border p-2 rounded border-pink-300" placeholder="https://meli.la/..." />
       </div>
-      <button type="submit" className="bg-pink-600 text-white font-bold py-3 px-6 rounded-lg w-full hover:bg-pink-700 transition">
-        Adicionar Produto à Loja
-      </button>
+      <div className="flex gap-4 pt-2">
+        <button type="reset" onClick={handleClear} className="bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition">
+          Limpar
+        </button>
+        <button type="submit" className="flex-1 bg-pink-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-pink-700 transition">
+          Adicionar Produto à Loja
+        </button>
+      </div>
     </form>
   );
 }
