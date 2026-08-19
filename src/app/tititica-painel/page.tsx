@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
@@ -67,7 +68,9 @@ export default async function AdminPanel() {
 
         <div className="bg-pink-100 p-6 rounded-xl mb-10">
           <h2 className="text-xl font-bold mb-4">Adicionar Novo Produto do Mercado Livre</h2>
-          <ProductForm addProductAction={addProduct} />
+          <Suspense fallback={<p>Carregando formulário...</p>}>
+            <ProductForm addProductAction={addProduct} />
+          </Suspense>
         </div>
 
         <div>
