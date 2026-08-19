@@ -22,6 +22,7 @@ export default async function AdminPanel() {
     let imageUrl = formData.get("imageUrl") as string;
     let price = formData.get("price") as string;
     const affiliateUrl = formData.get("affiliateUrl") as string;
+    const category = formData.get("category") as string || "Outros";
 
     if (!title) title = "Produto Adicionado";
     if (!price) price = "Preço sob consulta";
@@ -38,6 +39,7 @@ export default async function AdminPanel() {
         title,
         imageUrl,
         price,
+        category,
         source: "Mercado Livre",
       },
     });

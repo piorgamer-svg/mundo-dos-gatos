@@ -29,6 +29,7 @@ model Product {
   price        String // Salvar como string pra simplificar com moedas diferentes
   imageUrl     String
   source       String // ex: "Mercado Livre"
+  category     String?  @default("Outros")
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }

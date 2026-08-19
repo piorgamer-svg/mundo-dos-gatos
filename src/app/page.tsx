@@ -5,10 +5,17 @@ const prisma = new PrismaClient();
 
 export const revalidate = 60; // Revalidate every minute
 
-export default async function Home() {
+export default async function Home({ searchParams }: { searchParams: { category?: string } }) {
+  // Use await para searchParams devido às novas regras do Next.js 15+ (turbopack)
+  const params = await searchParams;
+  const currentCategory = params?.category || "Todas";
+
   const products = await prisma.product.findMany({
+    where: currentCategory !== "Todas" ? { category: currentCategory } : undefined,
     orderBy: { createdAt: "desc" },
   });
+
+  const CATEGORIAS = ['Todas', 'Moda', 'Beleza', 'Acessórios', 'Casa', 'Eletrônicos', 'Infantil', 'Outros'];
 
   return (
     <div className="min-h-screen bg-pink-50 font-sans text-gray-800 selection:bg-pink-300 selection:text-white">
@@ -45,6 +52,24 @@ export default async function Home() {
 
       {/* Product Grid */}
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+        
+        {/* Filtro de Categorias */}
+        <div className="flex space-x-2 sm:space-x-4 mb-10 overflow-x-auto pb-2 scrollbar-hide">
+          {CATEGORIAS.map((cat) => (
+            <a
+              key={cat}
+              href={cat === 'Todas' ? '/' : `/?category=${encodeURIComponent(cat)}`}
+              className={`whitespace-nowrap px-5 py-2.5 rounded-full font-bold text-sm transition-all shadow-sm ${
+                currentCategory === cat
+                  ? 'bg-pink-500 text-white border-2 border-pink-600'
+                  : 'bg-white text-pink-600 border-2 border-pink-200 hover:bg-pink-100 hover:border-pink-300'
+              }`}
+            >
+              {cat}
+            </a>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {products.length > 0 ? (
             products.map((product) => (
