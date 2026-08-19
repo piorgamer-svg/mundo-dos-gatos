@@ -63,8 +63,9 @@ export default async function Home() {
                   <h3 className="text-lg font-bold text-gray-800 line-clamp-2 min-h-[3.5rem]" style={{ fontFamily: 'var(--font-fredoka), sans-serif' }}>
                     {product.title}
                   </h3>
-                  <div className="mt-4 flex items-center justify-between">
+                  <div className="mt-4 flex flex-col">
                     <p className="text-2xl font-black text-pink-500 tracking-tight">{product.price}</p>
+                    <p className="text-[10px] text-gray-400 mt-1 leading-tight">* Preço sujeito a alteração. O valor válido é o do site oficial no momento da compra.</p>
                   </div>
                   <a
                     href={product.affiliateUrl}
@@ -86,6 +87,19 @@ export default async function Home() {
           )}
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-pink-200 py-8 text-center px-4">
+        <div className="max-w-4xl mx-auto text-xs text-gray-500 space-y-2">
+          <p className="font-bold text-pink-400">Lojinha da Tititica - Agregador de Ofertas</p>
+          <p>
+            <strong>Aviso Legal:</strong> A Lojinha da Tititica atua como vitrine de produtos de lojas parceiras (como o Mercado Livre) através de programas de afiliados. 
+            Nós não realizamos a venda, cobrança ou entrega dos produtos. 
+            O preço e a disponibilidade dos produtos podem sofrer alterações sem aviso prévio. 
+            O valor e as condições finais válidas são sempre as do site oficial do vendedor no momento de fechar o pedido.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
