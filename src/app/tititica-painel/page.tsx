@@ -60,6 +60,14 @@ export default async function AdminPanel() {
     orderBy: { createdAt: "desc" },
   });
 
+  const categoriesDb = await prisma.product.findMany({
+    select: { category: true },
+    distinct: ['category'],
+    where: { category: { not: null } }
+  });
+  
+  const existingCategories = categoriesDb.map(c => c.category as string).filter(Boolean);
+
   return (
     <div className="min-h-screen bg-pink-50 text-gray-800 p-8">
       <div className="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-xl">
@@ -71,7 +79,7 @@ export default async function AdminPanel() {
         <div className="bg-pink-100 p-6 rounded-xl mb-10">
           <h2 className="text-xl font-bold mb-4">Adicionar Novo Produto do Mercado Livre</h2>
           <Suspense fallback={<p>Carregando formulário...</p>}>
-            <ProductForm addProductAction={addProduct} />
+            <ProductForm addProductAction={addProduct} existingCategories={existingCategories} />
           </Suspense>
         </div>
 

@@ -15,7 +15,14 @@ export default async function Home({ searchParams }: { searchParams: { category?
     orderBy: { createdAt: "desc" },
   });
 
-  const CATEGORIAS = ['Todas', 'Moda', 'Beleza', 'Acessórios', 'Casa', 'Eletrônicos', 'Infantil', 'Outros'];
+  const categoriesDb = await prisma.product.findMany({
+    select: { category: true },
+    distinct: ['category'],
+    where: { category: { not: null } }
+  });
+  
+  const fetchedCategories = categoriesDb.map(c => c.category as string).filter(Boolean);
+  const CATEGORIAS = ['Todas', ...fetchedCategories];
 
   return (
     <div className="min-h-screen bg-pink-50 font-sans text-gray-800 selection:bg-pink-300 selection:text-white">

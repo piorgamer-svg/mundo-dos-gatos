@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-export default function ProductForm({ addProductAction }: { addProductAction: any }) {
+export default function ProductForm({ addProductAction, existingCategories = [] }: { addProductAction: any, existingCategories?: string[] }) {
   const searchParams = useSearchParams();
   
   const [originalUrl, setOriginalUrl] = useState('');
@@ -11,8 +11,7 @@ export default function ProductForm({ addProductAction }: { addProductAction: an
   const [price, setPrice] = useState('');
   const [imageUrl, setImageUrl] = useState('');
 
-  const [category, setCategory] = useState('Outros');
-  const CATEGORIAS = ['Moda', 'Beleza', 'Acessórios', 'Casa', 'Eletrônicos', 'Infantil', 'Outros'];
+  const [category, setCategory] = useState('');
 
   useEffect(() => {
     // Auto-preencher se vier via URL (Bookmarklet)
@@ -58,11 +57,21 @@ export default function ProductForm({ addProductAction }: { addProductAction: an
       <div className="flex gap-4">
         <div className="flex-1">
           <label className="block font-semibold mb-1">Categoria</label>
-          <select name="category" className="w-full border p-2 rounded bg-white" value={category} onChange={(e) => setCategory(e.target.value)}>
-            {CATEGORIAS.map(cat => (
-              <option key={cat} value={cat}>{cat}</option>
+          <input 
+            type="text" 
+            list="categorias-salvas"
+            name="category" 
+            className="w-full border p-2 rounded bg-white" 
+            value={category} 
+            onChange={(e) => setCategory(e.target.value)}
+            placeholder="Digite ou escolha da lista..."
+            required
+          />
+          <datalist id="categorias-salvas">
+            {existingCategories.map(cat => (
+              <option key={cat} value={cat} />
             ))}
-          </select>
+          </datalist>
         </div>
         <div className="flex-1">
           <label className="block font-semibold mb-1">Preço</label>
