@@ -51,16 +51,16 @@ export default async function Home({ searchParams }: { searchParams: { category?
       </header>
 
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-pink-100 py-20 sm:py-24 lg:py-32 border-b border-dashed border-pink-300">
+      <div className="relative overflow-hidden bg-pink-100 py-20 sm:py-24 lg:py-32 border-b border-dashed border-pink-300 bg-fixed">
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cotton-candy.png")' }}></div>
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8 text-center flex flex-col items-center">
-          <div className="h-32 w-32 sm:h-48 sm:w-48 mb-8 overflow-hidden rounded-full border-4 border-dashed border-pink-400 shadow-xl bg-white transform -rotate-3">
+          <div className="h-32 w-32 sm:h-48 sm:w-48 mb-8 overflow-hidden rounded-full border-4 border-dashed border-pink-400 shadow-xl bg-white animate-float">
             <img src="/logo.png" alt="Mascote Tititica" className="h-full w-full object-cover" />
           </div>
-          <h2 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight text-pink-400" style={{ fontFamily: 'var(--font-fredoka), sans-serif' }}>
+          <h2 className="animate-fade-in-up text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight text-pink-400" style={{ fontFamily: 'var(--font-fredoka), sans-serif' }}>
             <span className="drop-shadow-sm">Moda, Beleza</span> <span className="text-pink-500 drop-shadow-sm">e</span> <span className="drop-shadow-sm">Estilo!</span>
           </h2>
-          <p className="mt-6 max-w-2xl text-xl text-pink-800 mx-auto font-medium">
+          <p className="animate-fade-in-up mt-6 max-w-2xl text-xl text-pink-800 mx-auto font-medium" style={{ animationDelay: '0.2s' }}>
             Os artigos femininos mais lindos e maravilhosos separados com muito carinho pela Tititica para você!
           </p>
         </div>
@@ -108,7 +108,7 @@ export default async function Home({ searchParams }: { searchParams: { category?
             products.map((product) => (
               <div
                 key={product.id}
-                className={`group relative flex flex-col overflow-hidden rounded-3xl bg-white text-gray-800 transition-all duration-300 hover:-translate-y-2 ${
+                className={`product-card group relative flex flex-col overflow-hidden rounded-3xl bg-white text-gray-800 transition-all duration-300 hover:-translate-y-2 ${
                   product.isFeatured 
                     ? 'border-4 border-yellow-300 shadow-[8px_8px_0px_0px_rgba(253,224,71,1)] hover:shadow-[12px_12px_0px_0px_rgba(250,204,21,1)]'
                     : 'border-2 border-pink-200 shadow-[8px_8px_0px_0px_rgba(251,207,232,1)] hover:shadow-[12px_12px_0px_0px_rgba(244,114,182,1)]'
