@@ -4,9 +4,11 @@ import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import bcrypt from "bcryptjs";
 import ProductForm from "./ProductForm";
 import Dashboard from "./Dashboard";
 import AdminTabs from "./AdminTabs";
+import UserManagement from "./UserManagement";
 
 const prisma = new PrismaClient();
 
@@ -15,6 +17,37 @@ export default async function AdminPanel() {
   
   if (!session) {
     redirect("/acesso-restrito");
+  }
+
+  async function createUser(formData: FormData) {
+    "use server";
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    
+    if (!email || !password) return { error: "Preencha tudo!" };
+    
+    const existing = await prisma.user.findUnique({ where: { email } });
+    if (existing) return { error: "Email já existe" };
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await prisma.user.create({ data: { email, password: hashedPassword } });
+    revalidatePath("/tititica-painel");
+    return { success: true };
+  }
+
+  async function updatePassword(formData: FormData) {
+    "use server";
+    const email = formData.get("email") as string;
+    const newPassword = formData.get("newPassword") as string;
+    
+    if (!email || !newPassword) return { error: "Preencha tudo!" };
+    
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await prisma.user.update({
+      where: { email },
+      data: { password: hashedPassword }
+    });
+    return { success: true };
   }
 
   async function addProduct(formData: FormData) {
@@ -72,6 +105,11 @@ export default async function AdminPanel() {
   
   const existingCategories = categoriesDb.map(c => c.category as string).filter(Boolean);
 
+  const users = await prisma.user.findMany({
+    select: { id: true, email: true, createdAt: true },
+    orderBy: { createdAt: "asc" }
+  });
+
   const formSection = (
     <div className="bg-pink-100 p-6 rounded-xl">
       <h2 className="text-xl font-bold mb-4">Adicionar Novo Produto do Mercado Livre</h2>
@@ -112,6 +150,14 @@ export default async function AdminPanel() {
     </div>
   );
 
+  const usersSection = (
+    <UserManagement 
+      users={users} 
+      createUserAction={createUser} 
+      updatePasswordAction={updatePassword} 
+    />
+  );
+
   return (
     <div className="min-h-screen bg-pink-50 text-gray-800 p-8">
       <div className="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-xl">
@@ -124,6 +170,7 @@ export default async function AdminPanel() {
           dashboard={<Dashboard products={products} />}
           form={formSection}
           list={listSection}
+          users={usersSection}
         />
       </div>
     </div>
