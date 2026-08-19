@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 
@@ -26,12 +26,12 @@ export default function ProductForm({ addProductAction }: { addProductAction: an
       setIsLoading(true);
       try {
         // Fetch feito pelo NAVEGADOR do usuario (caseiro), burlando o bloqueio da Vercel!
-        const response = await fetch(https://api.mercadolibre.com/items/ + mlbId);
+        const response = await fetch(`https://api.mercadolibre.com/items/` + mlbId);
         if (response.ok) {
           const data = await response.json();
           if (!title) setTitle(data.title);
           if (!price && data.price) {
-            setPrice(R$  + data.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 }));
+            setPrice("R$ " + data.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 }));
           }
           if (!imageUrl && data.pictures && data.pictures.length > 0) {
             setImageUrl(data.pictures[0].secure_url || data.pictures[0].url);
