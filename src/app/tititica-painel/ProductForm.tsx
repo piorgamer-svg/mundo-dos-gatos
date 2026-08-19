@@ -94,6 +94,12 @@ export default function ProductForm({ addProductAction, existingCategories = [] 
         <label className="block font-semibold mb-1 text-pink-600">Seu Link de Afiliado *</label>
         <input type="url" name="affiliateUrl" required className="w-full border p-2 rounded border-pink-300" placeholder="https://meli.la/..." />
       </div>
+      
+      <div className="flex items-center gap-2 bg-yellow-50 p-3 rounded-lg border border-yellow-200">
+        <input type="checkbox" id="isFeatured" name="isFeatured" className="w-5 h-5 text-pink-600 rounded border-gray-300 focus:ring-pink-500" />
+        <label htmlFor="isFeatured" className="font-bold text-yellow-800">💖 Marcar como Destaque (Aparece no topo com selo)</label>
+      </div>
+
       <div className="flex gap-4 pt-2">
         <button type="reset" onClick={handleClear} className="bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition">
           Limpar

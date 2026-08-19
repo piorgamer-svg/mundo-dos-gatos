@@ -5,14 +5,23 @@ const prisma = new PrismaClient();
 
 export const revalidate = 60; // Revalidate every minute
 
-export default async function Home({ searchParams }: { searchParams: { category?: string } }) {
+export default async function Home({ searchParams }: { searchParams: { category?: string, q?: string } }) {
   // Use await para searchParams devido às novas regras do Next.js 15+ (turbopack)
   const params = await searchParams;
   const currentCategory = params?.category || "Todas";
+  const searchQuery = params?.q || "";
 
   const products = await prisma.product.findMany({
-    where: currentCategory !== "Todas" ? { category: currentCategory } : undefined,
-    orderBy: { createdAt: "desc" },
+    where: {
+      AND: [
+        currentCategory !== "Todas" ? { category: currentCategory } : {},
+        searchQuery ? { title: { contains: searchQuery, mode: 'insensitive' } } : {},
+      ]
+    },
+    orderBy: [
+      { isFeatured: "desc" },
+      { createdAt: "desc" }
+    ],
   });
 
   const categoriesDb = await prisma.product.findMany({
@@ -60,8 +69,25 @@ export default async function Home({ searchParams }: { searchParams: { category?
       {/* Product Grid */}
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         
+        {/* Barra de Pesquisa */}
+        <div className="mb-8">
+          <form action="/" method="GET" className="relative max-w-xl mx-auto">
+            <input type="hidden" name="category" value={currentCategory} />
+            <input 
+              type="search" 
+              name="q" 
+              defaultValue={searchQuery}
+              placeholder="O que você está procurando?" 
+              className="w-full pl-5 pr-12 py-3 rounded-full border-2 border-pink-200 focus:border-pink-400 focus:ring-0 shadow-sm"
+            />
+            <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-pink-400 hover:text-pink-600">
+              🔍
+            </button>
+          </form>
+        </div>
+
         {/* Filtro de Categorias */}
-        <div className="flex space-x-2 sm:space-x-4 mb-10 overflow-x-auto pb-2 scrollbar-hide">
+        <div className="flex space-x-2 sm:space-x-4 mb-10 overflow-x-auto pb-2 scrollbar-hide justify-center">
           {CATEGORIAS.map((cat) => (
             <a
               key={cat}
@@ -82,8 +108,17 @@ export default async function Home({ searchParams }: { searchParams: { category?
             products.map((product) => (
               <div
                 key={product.id}
-                className="group relative flex flex-col overflow-hidden rounded-3xl bg-white text-gray-800 shadow-[8px_8px_0px_0px_rgba(251,207,232,1)] border-2 border-pink-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-[12px_12px_0px_0px_rgba(244,114,182,1)]"
+                className={`group relative flex flex-col overflow-hidden rounded-3xl bg-white text-gray-800 transition-all duration-300 hover:-translate-y-2 ${
+                  product.isFeatured 
+                    ? 'border-4 border-yellow-300 shadow-[8px_8px_0px_0px_rgba(253,224,71,1)] hover:shadow-[12px_12px_0px_0px_rgba(250,204,21,1)]'
+                    : 'border-2 border-pink-200 shadow-[8px_8px_0px_0px_rgba(251,207,232,1)] hover:shadow-[12px_12px_0px_0px_rgba(244,114,182,1)]'
+                }`}
               >
+                {product.isFeatured && (
+                  <div className="absolute top-3 left-3 bg-yellow-300 text-yellow-800 text-xs font-black px-3 py-1 rounded-full z-10 shadow-sm flex items-center gap-1">
+                    💖 Escolha da Tititica
+                  </div>
+                )}
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden border-b-2 border-pink-100 sm:aspect-none sm:h-64 bg-white p-2">
                   <img
                     src={product.imageUrl || "https://placehold.co/400x400/ffe4e6/ff87a?text=Sem+Imagem"}
@@ -99,14 +134,26 @@ export default async function Home({ searchParams }: { searchParams: { category?
                     <p className="text-2xl font-black text-pink-500 tracking-tight">{product.price}</p>
                     <p className="text-[10px] text-gray-400 mt-1 leading-tight">* Preço sujeito a alteração. O valor válido é o do site oficial no momento da compra.</p>
                   </div>
-                  <a
-                    href={product.affiliateUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-6 flex items-center justify-center rounded-xl border-2 border-pink-300 bg-pink-200 px-4 py-3 text-sm font-black uppercase text-pink-800 shadow-[4px_4px_0px_0px_rgba(244,114,182,0.5)] hover:bg-pink-300 hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_rgba(244,114,182,0.5)] active:translate-y-2 active:shadow-none transition-all"
-                  >
-                    Eu Quero! 💖👗
-                  </a>
+                  
+                  <div className="mt-6 flex gap-2">
+                    <a
+                      href={`/api/go?id=${product.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center rounded-xl border-2 border-pink-300 bg-pink-200 px-4 py-3 text-sm font-black uppercase text-pink-800 shadow-[4px_4px_0px_0px_rgba(244,114,182,0.5)] hover:bg-pink-300 hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_rgba(244,114,182,0.5)] active:translate-y-2 active:shadow-none transition-all"
+                    >
+                      Eu Quero! 🛍️
+                    </a>
+                    <a
+                      href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`Olha que lindo que achei na Lojinha da Tititica!\n\n${product.title}\n${product.price}\n\n👉 https://lojinha-tititica.vercel.app/api/go?id=${product.id}`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center rounded-xl border-2 border-green-400 bg-green-100 px-4 py-3 text-sm font-black text-green-700 shadow-[4px_4px_0px_0px_rgba(74,222,128,0.5)] hover:bg-green-200 hover:translate-y-1 active:translate-y-2 transition-all"
+                      title="Compartilhar no WhatsApp"
+                    >
+                      💬
+                    </a>
+                  </div>
                 </div>
               </div>
             ))
