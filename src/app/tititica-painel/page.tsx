@@ -5,6 +5,8 @@ import { authOptions } from "@/lib/auth";
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import ProductForm from "./ProductForm";
+import Dashboard from "./Dashboard";
+import AdminTabs from "./AdminTabs";
 
 const prisma = new PrismaClient();
 
@@ -70,6 +72,46 @@ export default async function AdminPanel() {
   
   const existingCategories = categoriesDb.map(c => c.category as string).filter(Boolean);
 
+  const formSection = (
+    <div className="bg-pink-100 p-6 rounded-xl">
+      <h2 className="text-xl font-bold mb-4">Adicionar Novo Produto do Mercado Livre</h2>
+      <Suspense fallback={<p>Carregando formulário...</p>}>
+        <ProductForm addProductAction={addProduct} existingCategories={existingCategories} />
+      </Suspense>
+    </div>
+  );
+
+  const listSection = (
+    <div>
+      <h2 className="text-xl font-bold mb-4">Produtos Cadastrados ({products.length})</h2>
+      <div className="space-y-4">
+        {products.map((p) => (
+          <div key={p.id} className={`flex items-center justify-between p-4 border rounded shadow-sm transition bg-white ${p.isFeatured ? 'border-yellow-400 bg-yellow-50' : ''}`}>
+            <div className="flex items-center space-x-4">
+              <img src={p.imageUrl} alt={p.title} className="w-16 h-16 object-cover rounded" />
+              <div>
+                <p className="font-bold flex items-center gap-2">
+                  {p.title}
+                  {p.isFeatured && <span className="text-xs bg-yellow-300 text-yellow-800 px-2 py-0.5 rounded-full">Destaque</span>}
+                </p>
+                <p className="text-sm text-gray-500">{p.price} | Categoria: {p.category}</p>
+                <div className="flex items-center gap-4 mt-1">
+                  <p className="text-xs font-bold text-pink-600 bg-pink-100 px-2 py-1 rounded">👀 {p.clicks} Cliques</p>
+                </div>
+              </div>
+            </div>
+            <form action={deleteProduct}>
+              <input type="hidden" name="id" value={p.id} />
+              <button type="submit" className="text-red-500 hover:bg-red-50 rounded font-bold px-3 py-2 transition">
+                🗑️ Apagar
+              </button>
+            </form>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-pink-50 text-gray-800 p-8">
       <div className="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-xl">
@@ -78,41 +120,11 @@ export default async function AdminPanel() {
           <a href="/" target="_blank" className="text-pink-500 hover:underline">Ver Loja</a>
         </div>
 
-        <div className="bg-pink-100 p-6 rounded-xl mb-10">
-          <h2 className="text-xl font-bold mb-4">Adicionar Novo Produto do Mercado Livre</h2>
-          <Suspense fallback={<p>Carregando formulário...</p>}>
-            <ProductForm addProductAction={addProduct} existingCategories={existingCategories} />
-          </Suspense>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-bold mb-4">Produtos Cadastrados ({products.length})</h2>
-          <div className="space-y-4">
-            {products.map((p) => (
-              <div key={p.id} className={`flex items-center justify-between p-4 border rounded shadow-sm transition bg-white ${p.isFeatured ? 'border-yellow-400 bg-yellow-50' : ''}`}>
-                <div className="flex items-center space-x-4">
-                  <img src={p.imageUrl} alt={p.title} className="w-16 h-16 object-cover rounded" />
-                  <div>
-                    <p className="font-bold flex items-center gap-2">
-                      {p.title}
-                      {p.isFeatured && <span className="text-xs bg-yellow-300 text-yellow-800 px-2 py-0.5 rounded-full">Destaque</span>}
-                    </p>
-                    <p className="text-sm text-gray-500">{p.price} | Categoria: {p.category}</p>
-                    <div className="flex items-center gap-4 mt-1">
-                      <p className="text-xs font-bold text-pink-600 bg-pink-100 px-2 py-1 rounded">👀 {p.clicks} Cliques</p>
-                    </div>
-                  </div>
-                </div>
-                <form action={deleteProduct}>
-                  <input type="hidden" name="id" value={p.id} />
-                  <button type="submit" className="text-red-500 hover:bg-red-50 rounded font-bold px-3 py-2 transition">
-                    🗑️ Apagar
-                  </button>
-                </form>
-              </div>
-            ))}
-          </div>
-        </div>
+        <AdminTabs 
+          dashboard={<Dashboard products={products} />}
+          form={formSection}
+          list={listSection}
+        />
       </div>
     </div>
   );
