@@ -52,11 +52,11 @@ export default async function Home() {
                 key={product.id}
                 className="group relative flex flex-col overflow-hidden rounded-3xl bg-white text-gray-800 shadow-[8px_8px_0px_0px_rgba(251,207,232,1)] border-2 border-pink-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-[12px_12px_0px_0px_rgba(244,114,182,1)]"
               >
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden border-b-2 border-pink-100 sm:aspect-none sm:h-64">
+                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden border-b-2 border-pink-100 sm:aspect-none sm:h-64 bg-white p-2">
                   <img
                     src={product.imageUrl || "https://placehold.co/400x400/ffe4e6/ff87a?text=Sem+Imagem"}
                     alt={product.title}
-                    className="h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition-transform duration-500"
+                    className="h-full w-full object-contain object-center sm:h-full sm:w-full group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-6">
