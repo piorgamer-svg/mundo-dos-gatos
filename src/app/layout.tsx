@@ -19,8 +19,8 @@ const fredoka = Fredoka({
 });
 
 export const metadata: Metadata = {
-  title: "Lojinha da Tititica",
-  description: "As melhores escolhas fofinhas para você!",
+  title: "O Mundo dos Gatos",
+  description: "Tudo para o seu gatinho!",
 };
 
 export default function RootLayout({

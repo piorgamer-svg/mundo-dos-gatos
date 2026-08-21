@@ -34,34 +34,42 @@ export default async function Home({ searchParams }: { searchParams: { category?
   const CATEGORIAS = ['Todas', ...fetchedCategories];
 
   return (
-    <div className="min-h-screen bg-pink-50 font-sans text-gray-800 selection:bg-pink-300 selection:text-white">
+    <div className="min-h-screen bg-[#242424] font-sans text-gray-100 selection:bg-pink-300 selection:text-black">
       {/* Header */}
-      <header className="bg-white border-b border-pink-200 sticky top-0 z-10 shadow-sm">
+      <header className="bg-[#1a1a1a] border-b border-gray-800 sticky top-0 z-10 shadow-lg">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <div className="h-12 w-12 overflow-hidden rounded-full border-2 border-pink-400 bg-white">
               {/* O usuário precisará colocar o logo na pasta public */}
-              <img src="/logo.png" alt="Lojinha da Tititica Logo" className="h-full w-full object-cover" />
+              <img src="/logo.png" alt="O Mundo dos Gatos Logo" className="h-full w-full object-cover" />
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-widest uppercase text-pink-400" style={{ fontFamily: 'var(--font-fredoka), sans-serif' }}>
-              Lojinha da Tititica
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-widest uppercase" style={{ fontFamily: 'var(--font-fredoka), sans-serif' }}>
+              <span className="text-pink-400">O </span>
+              <span className="text-yellow-300">Mun</span>
+              <span className="text-blue-400">do </span>
+              <span className="text-green-400">dos </span>
+              <span className="text-pink-400">Ga</span>
+              <span className="text-yellow-300">tos</span>
             </h1>
           </div>
+          <a href="/painel-gatos" className="text-sm font-medium text-gray-400 hover:text-pink-400 transition-colors">
+            Admin
+          </a>
         </div>
       </header>
 
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-pink-100 py-20 sm:py-24 lg:py-32 border-b border-dashed border-pink-300 bg-fixed">
-        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cotton-candy.png")' }}></div>
+      <div className="relative overflow-hidden bg-[#2a2a2a] py-20 sm:py-24 lg:py-32 border-b border-dashed border-gray-600 bg-fixed">
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/black-felt.png")' }}></div>
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8 text-center flex flex-col items-center">
-          <div className="h-32 w-32 sm:h-48 sm:w-48 mb-8 overflow-hidden rounded-full border-4 border-dashed border-pink-400 shadow-xl bg-white animate-float">
-            <img src="/logo.png" alt="Mascote Tititica" className="h-full w-full object-cover" />
+          <div className="h-32 w-32 sm:h-48 sm:w-48 mb-8 overflow-hidden rounded-full border-4 border-dashed border-yellow-400 shadow-2xl bg-white transform -rotate-3 animate-float">
+            <img src="/logo.png" alt="Personagem O Mundo dos Gatos" className="h-full w-full object-cover" />
           </div>
-          <h2 className="animate-fade-in-up text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight text-pink-400" style={{ fontFamily: 'var(--font-fredoka), sans-serif' }}>
-            <span className="drop-shadow-sm">Moda, Beleza</span> <span className="text-pink-500 drop-shadow-sm">e</span> <span className="drop-shadow-sm">Estilo!</span>
+          <h2 className="animate-fade-in-up text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight" style={{ fontFamily: 'var(--font-fredoka), sans-serif' }}>
+            <span className="text-yellow-300 drop-shadow-md">Tudo</span> <span className="text-pink-400 drop-shadow-md">Para</span> <span className="text-blue-400 drop-shadow-md">Seu</span> <span className="text-green-400 drop-shadow-md">Gatinho!</span>
           </h2>
-          <p className="animate-fade-in-up mt-6 max-w-2xl text-xl text-pink-800 mx-auto font-medium" style={{ animationDelay: '0.2s' }}>
-            Os artigos femininos mais lindos e maravilhosos separados com muito carinho pela Tititica para você!
+          <p className="animate-fade-in-up mt-6 max-w-2xl text-xl text-gray-300 mx-auto font-medium" style={{ animationDelay: '0.2s' }}>
+            Os melhores produtos, brinquedos e acessórios escolhidos a dedo para fazer a alegria do seu felino.
           </p>
         </div>
       </div>
@@ -78,9 +86,9 @@ export default async function Home({ searchParams }: { searchParams: { category?
               name="q" 
               defaultValue={searchQuery}
               placeholder="O que você está procurando?" 
-              className="w-full pl-5 pr-12 py-3 rounded-full border-2 border-pink-200 focus:border-pink-400 focus:ring-0 shadow-sm"
+              className="w-full pl-5 pr-12 py-3 rounded-full bg-[#1a1a1a] border-2 border-gray-700 text-white focus:border-pink-400 focus:ring-0 shadow-sm"
             />
-            <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-pink-400 hover:text-pink-600">
+            <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-pink-400">
               🔍
             </button>
           </form>
@@ -94,8 +102,8 @@ export default async function Home({ searchParams }: { searchParams: { category?
               href={cat === 'Todas' ? '/' : `/?category=${encodeURIComponent(cat)}`}
               className={`whitespace-nowrap px-5 py-2.5 rounded-full font-bold text-sm transition-all shadow-sm ${
                 currentCategory === cat
-                  ? 'bg-pink-500 text-white border-2 border-pink-600'
-                  : 'bg-white text-pink-600 border-2 border-pink-200 hover:bg-pink-100 hover:border-pink-300'
+                  ? 'bg-pink-500 text-black border-2 border-pink-600'
+                  : 'bg-[#1a1a1a] text-gray-300 border-2 border-gray-700 hover:bg-gray-800 hover:border-gray-600'
               }`}
             >
               {cat}
@@ -108,31 +116,31 @@ export default async function Home({ searchParams }: { searchParams: { category?
             products.map((product) => (
               <div
                 key={product.id}
-                className={`product-card group relative flex flex-col overflow-hidden rounded-3xl bg-white text-gray-800 transition-all duration-300 hover:-translate-y-2 ${
+                className={`product-card group relative flex flex-col overflow-hidden rounded-3xl bg-[#1a1a1a] text-gray-200 transition-all duration-300 hover:-translate-y-2 ${
                   product.isFeatured 
                     ? 'border-4 border-yellow-300 shadow-[8px_8px_0px_0px_rgba(253,224,71,1)] hover:shadow-[12px_12px_0px_0px_rgba(250,204,21,1)]'
-                    : 'border-2 border-pink-200 shadow-[8px_8px_0px_0px_rgba(251,207,232,1)] hover:shadow-[12px_12px_0px_0px_rgba(244,114,182,1)]'
+                    : 'border-2 border-pink-400 shadow-[8px_8px_0px_0px_rgba(244,114,182,1)] hover:shadow-[12px_12px_0px_0px_rgba(244,114,182,1)]'
                 }`}
               >
                 {product.isFeatured && (
-                  <div className="absolute top-3 left-3 bg-yellow-300 text-yellow-800 text-xs font-black px-3 py-1 rounded-full z-10 shadow-sm flex items-center gap-1">
-                    💖 Escolha da Tititica
+                  <div className="absolute top-3 left-3 bg-yellow-300 text-yellow-900 text-xs font-black px-3 py-1 rounded-full z-10 shadow-sm flex items-center gap-1">
+                    💖 Mais Vendido
                   </div>
                 )}
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden border-b-2 border-pink-100 sm:aspect-none sm:h-64 bg-white p-2">
+                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden border-b-2 border-gray-800 sm:aspect-none sm:h-64 bg-white p-2">
                   <img
-                    src={product.imageUrl || "https://placehold.co/400x400/ffe4e6/ff87a?text=Sem+Imagem"}
+                    src={product.imageUrl || "https://placehold.co/400x400/1a1a1a/fbcfe8?text=Sem+Imagem"}
                     alt={product.title}
                     className="h-full w-full object-contain object-center sm:h-full sm:w-full group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-6">
-                  <h3 className="text-lg font-bold text-gray-800 line-clamp-2 min-h-[3.5rem]" style={{ fontFamily: 'var(--font-fredoka), sans-serif' }}>
+                  <h3 className="text-lg font-bold text-gray-100 line-clamp-2 min-h-[3.5rem]" style={{ fontFamily: 'var(--font-fredoka), sans-serif' }}>
                     {product.title}
                   </h3>
                   <div className="mt-4 flex flex-col">
-                    <p className="text-2xl font-black text-pink-500 tracking-tight">{product.price}</p>
-                    <p className="text-[10px] text-gray-400 mt-1 leading-tight">* Preço sujeito a alteração. O valor válido é o do site oficial no momento da compra.</p>
+                    <p className="text-2xl font-black text-pink-400 tracking-tight">{product.price}</p>
+                    <p className="text-[10px] text-gray-500 mt-1 leading-tight">* Preço sujeito a alteração.</p>
                   </div>
                   
                   <div className="mt-6 flex gap-2">
@@ -140,15 +148,15 @@ export default async function Home({ searchParams }: { searchParams: { category?
                       href={`/api/go?id=${product.id}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center rounded-xl border-2 border-pink-300 bg-pink-200 px-4 py-3 text-sm font-black uppercase text-pink-800 shadow-[4px_4px_0px_0px_rgba(244,114,182,0.5)] hover:bg-pink-300 hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_rgba(244,114,182,0.5)] active:translate-y-2 active:shadow-none transition-all"
+                      className="flex-1 flex items-center justify-center rounded-xl border-2 border-pink-500 bg-pink-400 px-4 py-3 text-sm font-black uppercase text-black shadow-[4px_4px_0px_0px_rgba(244,114,182,0.5)] hover:bg-pink-300 hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_rgba(244,114,182,0.5)] active:translate-y-2 active:shadow-none transition-all"
                     >
-                      Eu Quero! 🛍️
+                      Miau! Eu Quero! 🐾
                     </a>
                       <a
-                        href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`Olha que lindo que achei na Lojinha da Tititica!\n\n${product.title}\n${product.price}\n\n👉 https://lojinha-tititica.vercel.app/api/go?id=${product.id}`)}`}
+                        href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`Olha que lindo que achei n'O Mundo dos Gatos!\n\n${product.title}\n${product.price}\n\n👉 https://mundo-dos-gatos.vercel.app/api/go?id=${product.id}`)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center rounded-xl border-2 border-green-400 bg-green-100 px-4 py-3 shadow-[4px_4px_0px_0px_rgba(74,222,128,0.5)] hover:bg-green-200 hover:translate-y-1 active:translate-y-2 transition-all text-green-700"
+                        className="flex items-center justify-center rounded-xl border-2 border-green-500 bg-green-400 px-4 py-3 shadow-[4px_4px_0px_0px_rgba(74,222,128,0.5)] hover:bg-green-300 hover:translate-y-1 active:translate-y-2 transition-all text-black"
                         title="Compartilhar no WhatsApp"
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
@@ -160,50 +168,26 @@ export default async function Home({ searchParams }: { searchParams: { category?
               </div>
             ))
           ) : (
-            <div className="col-span-full text-center py-24 bg-white border-2 border-dashed border-pink-300 rounded-3xl shadow-sm">
-              <span className="text-6xl">👗</span>
-              <h3 className="mt-4 text-xl font-bold text-pink-500" style={{ fontFamily: 'var(--font-fredoka), sans-serif' }}>Nenhum artigo feminino ainda</h3>
-              <p className="mt-2 text-pink-400">A vitrine está sendo preparada com novidades em breve.</p>
+            <div className="col-span-full text-center py-24 bg-[#1a1a1a] border-2 border-dashed border-gray-600 rounded-3xl shadow-sm">
+              <span className="text-6xl">😿</span>
+              <h3 className="mt-4 text-xl font-bold text-gray-300" style={{ fontFamily: 'var(--font-fredoka), sans-serif' }}>Nenhum gatinho brincando aqui ainda</h3>
+              <p className="mt-2 text-gray-500">A vitrine está sendo preparada com novidades em breve.</p>
             </div>
           )}
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-pink-200 py-10 px-4">
+      <footer className="bg-[#1a1a1a] border-t border-gray-800 py-10 px-4">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
           
           <div className="text-center md:text-left text-xs text-gray-500 max-w-3xl space-y-2">
-            <p className="font-bold text-pink-400 text-sm">Lojinha da Tititica - Agregador de Ofertas</p>
+            <p className="font-bold text-pink-400 text-sm">O Mundo dos Gatos</p>
             <p>
-              <strong>Aviso Legal:</strong> A Lojinha da Tititica atua como vitrine de produtos de lojas parceiras (como o Mercado Livre) através de programas de afiliados. 
+              <strong>Aviso Legal:</strong> O Mundo dos Gatos atua como vitrine de produtos de lojas parceiras através de programas de afiliados. 
               Nós não realizamos a venda, cobrança ou entrega dos produtos. 
-              O preço e a disponibilidade dos produtos podem sofrer alterações sem aviso prévio. 
-              O valor e as condições finais válidas são sempre as do site oficial do vendedor no momento de fechar o pedido.
             </p>
           </div>
-
-          <div className="flex flex-col items-center md:items-end space-y-3 shrink-0">
-            <p className="font-bold text-pink-400 text-sm">Siga a Tititica</p>
-            <div className="flex space-x-4">
-              <a href="https://www.youtube.com/@Tititica" target="_blank" rel="noopener noreferrer" className="text-pink-400 hover:text-pink-600 hover:-translate-y-1 transition-all" title="YouTube">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.501 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.377.55 9.377.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>
-              </a>
-              <a href="https://www.tiktok.com/@tititica_news" target="_blank" rel="noopener noreferrer" className="text-pink-400 hover:text-pink-600 hover:-translate-y-1 transition-all" title="TikTok">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
-                </svg>
-              </a>
-              <a href="https://www.facebook.com/profile.php?id=61590394447759" target="_blank" rel="noopener noreferrer" className="text-pink-400 hover:text-pink-600 hover:-translate-y-1 transition-all" title="Facebook">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-
         </div>
       </footer>
     </div>

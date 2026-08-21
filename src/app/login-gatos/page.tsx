@@ -23,29 +23,32 @@ export default function LoginPage() {
     if (result?.error) {
       setError("Credenciais inválidas");
     } else {
-      router.push("/tititica-painel");
+      router.push("/painel-gatos");
       router.refresh();
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 text-gray-900">
-      <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-lg">
+    <div className="flex min-h-screen items-center justify-center bg-[#242424] px-4 text-gray-100" style={{ fontFamily: 'var(--font-fredoka), sans-serif' }}>
+      <div className="w-full max-w-md space-y-8 rounded-3xl bg-[#1a1a1a] p-8 shadow-2xl border-2 border-pink-400">
         <div>
-          <h2 className="text-center text-3xl font-extrabold text-gray-900">
-            Painel Admin
+          <div className="mx-auto h-24 w-24 overflow-hidden rounded-full border-4 border-dashed border-yellow-300">
+            <img src="/logo.png" alt="Logo" className="h-full w-full object-cover" />
+          </div>
+          <h2 className="mt-4 text-center text-3xl font-black tracking-widest uppercase text-pink-400">
+            Mundo dos Gatos
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Faça login para gerenciar sua loja de afiliados
+          <p className="mt-2 text-center text-sm text-gray-400">
+            Painel de Administração
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
-            <div className="rounded-md bg-red-50 p-4 text-sm text-red-600">
+            <div className="rounded-xl bg-red-900/50 p-4 text-sm text-red-300 border border-red-500">
               {error}
             </div>
           )}
-          <div className="space-y-4 rounded-md shadow-sm">
+          <div className="space-y-4">
             <div>
               <label htmlFor="email" className="sr-only">
                 Email
@@ -55,8 +58,8 @@ export default function LoginPage() {
                 name="email"
                 type="email"
                 required
-                className="relative block w-full rounded-md border-0 py-2.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                placeholder="Email"
+                className="block w-full rounded-xl bg-[#2a2a2a] border-2 border-gray-600 py-3 px-4 text-white placeholder:text-gray-500 focus:border-pink-400 focus:ring-0 sm:text-sm font-medium transition-colors"
+                placeholder="Email de Acesso"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -70,8 +73,8 @@ export default function LoginPage() {
                 name="password"
                 type="password"
                 required
-                className="relative block w-full rounded-md border-0 py-2.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                placeholder="Senha"
+                className="block w-full rounded-xl bg-[#2a2a2a] border-2 border-gray-600 py-3 px-4 text-white placeholder:text-gray-500 focus:border-pink-400 focus:ring-0 sm:text-sm font-medium transition-colors"
+                placeholder="Senha Secreta"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -81,9 +84,9 @@ export default function LoginPage() {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-blue-600 px-3 py-2.5 text-sm font-semibold text-white hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              className="flex w-full justify-center items-center rounded-xl border-2 border-pink-500 bg-pink-400 px-4 py-3 text-lg font-black uppercase text-black shadow-[4px_4px_0px_0px_rgba(244,114,182,0.5)] hover:bg-pink-300 hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_rgba(244,114,182,0.5)] active:translate-y-2 active:shadow-none transition-all"
             >
-              Entrar
+              Entrar 🐾
             </button>
           </div>
         </form>

@@ -29,8 +29,8 @@ export default function UserManagement({
 
   return (
     <div className="space-y-8">
-      <div className="bg-white p-6 border-2 border-pink-100 rounded-xl shadow-sm">
-        <h3 className="text-xl font-bold text-pink-600 mb-4">👥 Membros da Equipe ({users.length})</h3>
+      <div className="bg-[#1a1a1a] p-6 border-2 border-pink-100 rounded-xl shadow-sm">
+        <h3 className="text-xl font-bold text-pink-400 mb-4">👥 Membros da Equipe ({users.length})</h3>
         <div className="space-y-3 mb-8">
           {users.map(u => (
             <div key={u.id} className="flex justify-between items-center p-3 bg-gray-50 border rounded-lg">
@@ -57,7 +57,7 @@ export default function UserManagement({
                 <label className="block text-sm font-semibold mb-1">Senha</label>
                 <input type="password" name="password" required className="w-full border p-2 rounded" placeholder="******" />
               </div>
-              <button type="submit" className="w-full bg-pink-600 text-white font-bold py-2 rounded hover:bg-pink-700 transition">
+              <button type="submit" className="w-full bg-pink-500 text-white font-bold py-2 rounded hover:bg-pink-700 transition">
                 Criar Usuário
               </button>
               {createMsg && <p className="text-sm font-bold text-center mt-2">{createMsg}</p>}
@@ -70,7 +70,7 @@ export default function UserManagement({
             <form action={handleUpdate} className="space-y-3">
               <div>
                 <label className="block text-sm font-semibold mb-1">Email do Usuário</label>
-                <select name="email" required className="w-full border p-2 rounded bg-white">
+                <select name="email" required className="w-full border p-2 rounded bg-[#1a1a1a]">
                   {users.map(u => (
                     <option key={u.id} value={u.email}>{u.email}</option>
                   ))}
